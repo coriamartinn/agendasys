@@ -14,9 +14,9 @@ export const getFecha = async (fecha) => {
   });
 };
 
-export const checkTurnoOcupado = async (fecha, horario, bssId) => {
+export const checkTurnoOcupado = async (fecha, horario, business_id) => {
   return await TurnosEntity.findOne({
-    where: { fecha, horario, bssId },
+    where: { fecha, horario, business_id },
   });
 };
 // POST

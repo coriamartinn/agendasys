@@ -16,11 +16,10 @@ export const getServicios = async (req, res) => {
 // post controlador
 export const crearServicio = async (req, res) => {
   try {
-    const { business_id } = req.params;
     const { nombre, precio } = req.body;
 
     const buildServicio = {
-      business_id,
+      business_id: req.admin.business_id,
       nombre,
       precio,
     };

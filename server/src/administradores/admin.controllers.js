@@ -39,8 +39,7 @@ export const registrarAdmin = async (req, res) => {
     };
 
     const adminCreado = await createAdmin(buildAdmin);
-
-    res.send(adminCreado);
+    res.status(200).json(adminCreado);
   } catch (e) {
     res
       .status(400)

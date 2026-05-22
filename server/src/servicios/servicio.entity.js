@@ -19,4 +19,4 @@ export const ServicioEntity = conn.define("Servicio", {
   },
 });
 
-ServicioEntity.sync({ alter: true });
+ServicioEntity.sync({ alter: false });

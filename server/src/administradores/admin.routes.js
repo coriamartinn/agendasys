@@ -10,8 +10,8 @@ export const routerAdmin = Router();
 
 routerAdmin.get("/adminPanel", findTurnos);
 routerAdmin.post(
-  "/adminPanel/auth/register",
+  "/auth/adminPanel/register",
   validateDatosAdmin,
   registrarAdmin,
 );
-routerAdmin.post("/adminPanel/auth/login", logearAdmin);
+routerAdmin.post("/auth/adminPanel/login", logearAdmin);

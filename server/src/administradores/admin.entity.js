@@ -8,7 +8,7 @@ export const Admin = conn.define("Admins", {
     primaryKey: true,
   },
   business_id: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
   },
   email: {
     type: DataTypes.STRING,
@@ -18,4 +18,4 @@ export const Admin = conn.define("Admins", {
   },
 });
 
-Admin.sync({ alter: true });
+Admin.sync({ alter: false });

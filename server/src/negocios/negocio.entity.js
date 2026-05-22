@@ -12,4 +12,4 @@ export const Negocio = conn.define("Negocios", {
   },
 });
 
-Negocio.sync({ alter: true });
+Negocio.sync({ alter: false });
