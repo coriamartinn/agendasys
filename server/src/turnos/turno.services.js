@@ -1,10 +1,13 @@
 import { TurnosEntity } from "./turno.entity.js";
 
-// GET
-export const getTurnos = async () => {
-  return await TurnosEntity.findAll({
-    where: {},
-  });
+// GET por business_id
+export const getTurnosAll = async () => {
+  return await TurnosEntity.findAll();
+};
+
+// GET por business_id
+export const getTurnos = async (business_id) => {
+  return await TurnosEntity.findAll({ where: { business_id: business_id } });
 };
 // GET FECHA
 

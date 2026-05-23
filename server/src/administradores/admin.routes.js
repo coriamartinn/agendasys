@@ -1,14 +1,10 @@
 import { Router } from "express";
-import {
-  findTurnos,
-  registrarAdmin,
-  logearAdmin,
-} from "./admin.controllers.js";
+import { registrarAdmin, logearAdmin } from "./admin.controllers.js";
 import { validateDatosAdmin } from "../helpers/validaciones.js";
+import { midAuthToken } from "../middlewares/middlewareAuth.js";
 
 export const routerAdmin = Router();
 
-routerAdmin.get("/adminPanel", findTurnos);
 routerAdmin.post(
   "/auth/adminPanel/register",
   validateDatosAdmin,

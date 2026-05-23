@@ -3,19 +3,9 @@ import {
   checkPassHash,
   createAdmin,
 } from "./admin.services.js";
-import { getTurnos } from "../turnos/turno.services.js";
 import bcrypt from "bcrypt";
 import { helperNegocio } from "../helpers/helperNegocio.js";
 import { genJWT } from "../helpers/generadorJWT.js";
-
-export const findTurnos = async (req, res) => {
-  try {
-    const turnos = await getTurnos();
-    res.status(200).send(turnos);
-  } catch (e) {
-    res.status(400).json({ msj: `Turnos no encontrados!!-> ${e}` });
-  }
-};
 
 export const registrarAdmin = async (req, res) => {
   try {

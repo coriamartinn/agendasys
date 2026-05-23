@@ -2,19 +2,26 @@ import {
   checkTurnoOcupado,
   getFecha,
   getTurnos,
+  getTurnosAll,
   postTurno,
 } from "./turno.services.js";
 import { ServicioEntity } from "../servicios/servicio.entity.js";
 import { helperNegocio } from "../helpers/helperNegocio.js";
 
 //GET
-export const findTurnos = async (req, res) => {
+export const findTurnosAll = async (req, res) => {
   let turnos;
   if (req.query.fecha) {
     turnos = await getFecha(req.query.fecha);
   } else {
-    turnos = await getTurnos();
+    turnos = await getTurnosAll();
   }
+  res.send(turnos);
+};
+//GET
+export const findTurnos = async (req, res) => {
+  const { business_id } = req.admin;
+  const turnos = await getTurnos(business_id);
   res.send(turnos);
 };
 // POST

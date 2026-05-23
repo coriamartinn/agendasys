@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { conn } from "../utils/sequelize.js";
+import { TurnosEntity } from "../turnos/turno.entity.js";
 
 export const Negocio = conn.define("Negocios", {
   id: {

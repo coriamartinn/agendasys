@@ -9,6 +9,7 @@ export const Admin = conn.define("Admins", {
   },
   business_id: {
     type: DataTypes.INTEGER,
+    allowNull: false,
   },
   email: {
     type: DataTypes.STRING,

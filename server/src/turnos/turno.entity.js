@@ -1,4 +1,5 @@
 import { ServicioEntity } from "../servicios/servicio.entity.js";
+import { Negocio } from "../negocios/negocio.entity.js";
 import { conn } from "../utils/sequelize.js";
 import { DataTypes } from "sequelize";
 
@@ -21,6 +22,7 @@ export const TurnosEntity = conn.define(
     },
     servicio_id: {
       type: DataTypes.INTEGER,
+      references: { model: "Servicios", key: "id" },
     },
     business_id: {
       type: DataTypes.INTEGER,
@@ -39,4 +41,4 @@ TurnosEntity.belongsTo(ServicioEntity, { foreignKey: "servicio_id" });
 
 // sincrinizacion
 
-TurnosEntity.sync({ alter: false });
+TurnosEntity.sync({ alter: true });
