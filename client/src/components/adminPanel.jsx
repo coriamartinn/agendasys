@@ -4,9 +4,8 @@ import { wrapperFetch } from "../utils/utilsToken";
 /* ───────────────────────── NAV ───────────────────────── */
 
 const NAV_ITEMS = [
-  { id: "turnos", label: "Turnos", icon: "✂️" },
-  { id: "clientes", label: "Clientes", icon: "👤" },
-  { id: "config", label: "Config", icon: "⚙️" },
+  { id: "turnos", label: "Turnos", icon: "📒" },
+  { id: "config", label: "configuración", icon: "⚙️" },
 ];
 
 function Spinner() {
@@ -66,6 +65,15 @@ export const TurnosPage = () => {
     fetchServicios();
   }, []);
 
+  const handleDelete = async (id) => {
+    try {
+      await wrapperFetch(`turnos/${id}`, { method: "DELETE" });
+      setTurnos((prev) => prev.filter((turno) => turno.id !== id));
+    } catch (e) {
+      console.error("Error al eliminar turno:", e);
+    }
+  };
+
   const filtered =
     filter === "todos" ? turnos : turnos.filter((t) => t.status === filter);
 
@@ -82,31 +90,14 @@ export const TurnosPage = () => {
     <div className="space-y-4">
       {/* FILTERS */}
       <div className="flex flex-wrap gap-2 items-center">
-        {["todos", "pendiente", "confirmado", "completado", "cancelado"].map(
-          (f) => (
-            <button
-              key={f}
-              onClick={() => setFilter(f)}
-              className={`px-4 py-1.5 rounded-full text-sm border transition
-              ${
-                filter === f
-                  ? "bg-slate-900 text-white border-slate-900"
-                  : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
-              }`}
-            >
-              {f}
-            </button>
-          ),
-        )}
-
-        <span className="ml-auto text-xs text-slate-400">
+        <span className="ml-auto text-sm text-slate-400">
           {filtered.length} turnos
         </span>
       </div>
 
       {/* LIST */}
       {filtered.length === 0 ? (
-        <Empty text="No hay turnos para este filtro" />
+        <Empty text="No hay turnos " />
       ) : (
         <div className="space-y-2">
           {filtered.map((t) => {
@@ -131,12 +122,22 @@ export const TurnosPage = () => {
                     </span>
                   </p>
                 </div>
-
                 {/* CENTER */}
                 <div className="flex flex-col items-center">
                   <span className="bg-slate-900 text-white text-sm px-3 py-1 rounded-lg font-semibold">
                     {t.horario}
                   </span>
+
+                  <span className="text-xs text-slate-400 mt-1">{t.fecha}</span>
+                </div>
+                {/* CENTER */}
+                <div className="flex flex-col items-center">
+                  <button
+                    class="bg-red-500 text-white px-1.5 rounded-sm hover:bg-red-700 cursor-pointer"
+                    onClick={() => handleDelete(t.id)}
+                  >
+                    eliminar
+                  </button>
 
                   <span className="text-xs text-slate-400 mt-1">{t.fecha}</span>
                 </div>
@@ -184,10 +185,10 @@ export const AdminPanel = () => {
       {/* SIDEBAR */}
       <aside className="w-56 bg-slate-900 text-white flex flex-col">
         <div className="p-4 border-b border-white/10 font-bold">
-          ✂️ {negocio ?? "Mi negocio"}
+          {negocio ?? "Mi negocio"}
         </div>
 
-        <nav className="flex flex-col gap-1 p-2">
+        <nav className="flex-1 flex flex-col gap-1 p-2">
           {NAV_ITEMS.map((item) => {
             const isActive = active === item.id;
 
@@ -207,6 +208,15 @@ export const AdminPanel = () => {
               </button>
             );
           })}
+          <button
+            onClick={() => {
+              localStorage.removeItem("token");
+              window.location.href = "/login";
+            }}
+            className="mt-auto mx-2 mb-4 bg-red-500 hover:bg-red-700 text-white text-sm px-3 py-2 rounded-lg transition cursor-pointer"
+          >
+            Cerrar Sesión
+          </button>
         </nav>
       </aside>
 
@@ -218,8 +228,7 @@ export const AdminPanel = () => {
         {/* CONTENT */}
         <section className="p-6">
           {active === "turnos" && <TurnosPage />}
-          {active === "clientes" && <Placeholder label="Clientes" />}
-          {active === "config" && <Placeholder label="Configuración" />}
+          {active === "configuracion" && <Placeholder label="Configuración" />}
         </section>
       </main>
     </div>

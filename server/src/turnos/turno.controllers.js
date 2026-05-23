@@ -1,5 +1,6 @@
 import {
   checkTurnoOcupado,
+  deleteTurno,
   getFecha,
   getTurnos,
   getTurnosAll,
@@ -18,7 +19,7 @@ export const findTurnosAll = async (req, res) => {
   }
   res.send(turnos);
 };
-//GET
+//GET por id de negocio
 export const findTurnos = async (req, res) => {
   const { business_id } = req.admin;
   const turnos = await getTurnos(business_id);
@@ -60,5 +61,19 @@ export const createTurno = async (req, res) => {
     res
       .status(400)
       .json({ msj: `Ha ocurrido un error y no se pudo crear! -> ${e}` });
+  }
+};
+
+export const eliminarTurno = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deleteTr = deleteTurno(id);
+
+    res.status(200).json({ msg: `Turno eliminado con exito!` });
+  } catch (e) {
+    res
+      .status(401)
+      .json({ msg: `no ha sido posible eliminar el turno -> ${e}` });
   }
 };

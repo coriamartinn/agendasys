@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -42,7 +41,7 @@ export const Register = () => {
   };
   return (
     <>
-      <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+      <div className="bg-gray-800 min-h-screen flex flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             alt="Coria Dev - Agenda pro"
@@ -84,7 +83,7 @@ export const Register = () => {
                   autoComplete="nombre"
                   value={nombre}
                   onChange={(e) => setnombre(e.target.value)}
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-400 dark:focus:outline-indigo-500"
                 />
               </div>
             </div>
@@ -118,14 +117,6 @@ export const Register = () => {
                 >
                   Contraseña
                 </label>
-                <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
-                  >
-                    no recordas tu contraseña?
-                  </a>
-                </div>
               </div>
               <div className="mt-2">
                 <input
@@ -150,16 +141,6 @@ export const Register = () => {
               </button>
             </div>
           </form>
-
-          <p className="mt-10 text-center text-sm/6 text-gray-500 dark:text-gray-400">
-            todavia no tenes cuenta?{" "}
-            <Link
-              to="/login"
-              className="font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
-            >
-              Log in...
-            </Link>
-          </p>
         </div>
       </div>
     </>

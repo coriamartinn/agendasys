@@ -26,3 +26,7 @@ export const checkTurnoOcupado = async (fecha, horario, business_id) => {
 export const postTurno = async (turno) => {
   return await TurnosEntity.create(turno);
 };
+
+export const deleteTurno = async (id) => {
+  return await TurnosEntity.destroy({ where: { id } });
+};
