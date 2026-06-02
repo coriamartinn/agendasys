@@ -6,6 +6,7 @@ import {
   agregarDiaBloqueado,
   eliminarDiaBloqueado,
   horariosDisponibles,
+  getConfigPublico,
 } from "./configs.controllers.js";
 
 import {
@@ -17,6 +18,10 @@ import {
 
 export const routerConfigs = Router();
 routerConfigs.get("/horarios-disponibles", horariosDisponibles);
+routerConfigs.get(
+  "/configuracion-negocio/publico/:negocioId",
+  getConfigPublico,
+);
 routerConfigs.get("/configuracion-negocio", midAuthToken, buscarTodo);
 routerConfigs.put(
   "/configuracion-negocio",

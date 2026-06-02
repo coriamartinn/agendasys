@@ -4,6 +4,7 @@ import {
   addDiaBloqueado,
   deleteDiaBloqueado,
   getHorariosDisponibles,
+  obtenerConfigNegocio,
 } from "./configs.services.js";
 import {
   getHorarios,
@@ -21,6 +22,16 @@ export const buscarTodo = async (req, res) => {
     res.status(200).send(busquedaBodys);
   } catch (e) {
     res.status(400).send("No se han encontrado!");
+  }
+};
+
+export const getConfigPublico = async (req, res) => {
+  try {
+    const { negocioId } = req.params;
+    const config = await obtenerConfigNegocio(negocioId);
+    res.status(200).json({ config });
+  } catch (e) {
+    res.status(400).send("No se encontró la configuración");
   }
 };
 

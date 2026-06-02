@@ -117,8 +117,23 @@ function StepDatos({ servicio, onBack, onConfirm, businessId }) {
   const [horarioSel, setHorarioSel] = useState(null);
   const [loadingHorarios, setLoadingHorarios] = useState(false);
   const [errors, setErrors] = useState({});
+  const [maxDias, setMaxDias] = useState(null);
 
   const hoy = new Date().toISOString().split("T")[0];
+
+  useEffect(() => {
+    apiFetch(`configuracion-negocio/publico/${businessId}`)
+      .then((data) => setMaxDias(data?.config?.anticipacion_max_dias ?? null))
+      .catch(console.error);
+  }, [businessId]);
+
+  const fechaMax = maxDias
+    ? (() => {
+        const d = new Date();
+        d.setDate(d.getDate() + Number(maxDias));
+        return d.toISOString().split("T")[0];
+      })()
+    : undefined;
 
   useEffect(() => {
     if (!form.fecha || form.fecha.length < 10) return;
@@ -247,6 +262,7 @@ function StepDatos({ servicio, onBack, onConfirm, businessId }) {
           <input
             type="date"
             min={hoy}
+            max={fechaMax}
             value={form.fecha}
             onChange={(e) => {
               setForm({ ...form, fecha: e.target.value });

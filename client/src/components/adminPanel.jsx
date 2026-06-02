@@ -333,7 +333,7 @@ function ConfigPage() {
     hora_cierre: "20:00",
     duracion_turno_default: 60,
     buffer_entre_turnos: 10,
-    anticipacion_max_dias: 30,
+    anticipacion_max_dias: 10,
   });
 
   const [diasLaborales, setDiasLaborales] = useState({

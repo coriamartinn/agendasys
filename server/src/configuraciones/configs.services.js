@@ -23,6 +23,12 @@ export const getAll = async (business_id) => {
   };
 };
 
+export const obtenerConfigNegocio = async (business_id) => {
+  return await ConfigNegocio.findOne({
+    where: { business_id },
+  });
+};
+
 // PUT
 export const updateConfig = async (business_id, body) => {
   const { config, diasLaborales } = body;
