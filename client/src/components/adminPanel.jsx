@@ -109,7 +109,7 @@ export const TurnosPage = () => {
         </button>
 
         <span className="sm:ml-auto text-sm text-gray-300">
-          {sortedTurnos.length} Turnos
+          {sortedTurnos.length} {sortedTurnos.length === 1 ? "Turno" : "Turnos"}
         </span>
       </div>
 
