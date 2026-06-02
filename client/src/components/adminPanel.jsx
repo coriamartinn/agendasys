@@ -56,10 +56,7 @@ export const TurnosPage = () => {
     }
   };
 
-  useEffect(() => {
-    fetchTurnos();
-    fetchServicios();
-  }, []);
+  (useEffect(() => {}, []), fetchTurnos(), fetchServicios());
 
   const handleDelete = async (id) => {
     try {
@@ -92,16 +89,22 @@ export const TurnosPage = () => {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap gap-2 items-center">
-        <span className="text-sm text-slate-400">Ordenar por:</span>
+      <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
+        <span className="text-sm text-gray-300">Ordenar por:</span>
+
         <button
           onClick={() => setSortBy("fecha")}
-          className={`px-3 py-1 rounded border transition cursor-pointer
-          ${sortBy === "fecha" ? "bg-white text-black" : "bg-slate-700 text-white hover:bg-slate-600"}`}
+          className={`px-3 py-1 rounded border border-white transition cursor-pointer
+        ${
+          sortBy === "fecha"
+            ? "bg-white text-black"
+            : "bg-black text-white hover:bg-white hover:text-black"
+        }`}
         >
           Fecha
         </button>
-        <span className="ml-auto text-sm text-slate-400">
+
+        <span className="sm:ml-auto text-sm text-gray-300">
           {sortedTurnos.length} Turnos
         </span>
       </div>
@@ -114,38 +117,53 @@ export const TurnosPage = () => {
             const servicioEncontrado = servicios.find(
               (s) => s.id === t.servicio_id,
             );
+
             return (
               <div
                 key={t.id}
-                className="bg-slate-900 border border-slate-700 rounded-xl p-4 flex items-center justify-between hover:border-slate-500 transition"
+                className="bg-black border border-white rounded-xl p-4 transition hover:border-white"
               >
-                <div className="flex flex-col">
-                  <p className="font-semibold text-white text-base">
-                    {t.nombre} {t.apellido}
-                  </p>
-                  <p className="text-sm text-slate-400 mt-1">
-                    Servicio:
-                    <span className="font-medium text-green-400 ml-1">
-                      {servicioEncontrado?.nombre ?? "Sin servicio"}
+                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                  {/* DATOS */}
+                  <div className="flex-1 min-w-0">
+                    <p className="font-semibold text-white text-base break-words">
+                      {t.nombre} {t.apellido}
+                    </p>
+
+                    <p className="text-sm text-gray-300 mt-1">
+                      Servicio:
+                      <span className="font-medium text-green-400 ml-1 break-words">
+                        {servicioEncontrado?.nombre ?? "Sin servicio"}
+                      </span>
+                    </p>
+
+                    <p className="text-gray-400 text-sm mt-1">{t.fecha}</p>
+                  </div>
+
+                  {/* HORA */}
+                  <div className="flex justify-center lg:justify-start">
+                    <span className="bg-black border border-white text-white px-4 py-2 rounded-lg font-semibold whitespace-nowrap">
+                      {t.horario}
                     </span>
-                  </p>
-                  <p className="text-slate-500 text-sm mt-1">{t.fecha}</p>
-                </div>
-                <div className="flex flex-col items-center">
-                  <span className="bg-black border border-slate-700 text-white text-md px-4 py-2 rounded-lg font-semibold">
-                    {t.horario}
-                  </span>
-                </div>
-                <div className="flex flex-row items-center gap-2">
-                  <button className="bg-green-700 text-white py-2 px-4 rounded-lg hover:bg-green-800 transition cursor-pointer">
-                    <img className="w-6" src="../../icon-wpp.png" />
-                  </button>
-                  <button
-                    className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition cursor-pointer"
-                    onClick={() => handleDelete(t.id)}
-                  >
-                    eliminar
-                  </button>
+                  </div>
+
+                  {/* BOTONES */}
+                  <div className="flex flex-row justify-center lg:justify-end gap-2 w-full lg:w-auto">
+                    <button className="bg-green-700 text-white py-2 px-4 rounded-lg hover:bg-green-800 transition cursor-pointer flex items-center justify-center">
+                      <img
+                        className="w-6 h-6 object-contain"
+                        src="../../icon-wpp.png"
+                        alt="WhatsApp"
+                      />
+                    </button>
+
+                    <button
+                      className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition cursor-pointer"
+                      onClick={() => handleDelete(t.id)}
+                    >
+                      Eliminar
+                    </button>
+                  </div>
                 </div>
               </div>
             );
@@ -176,9 +194,7 @@ function HorariosSection() {
     }
   };
 
-  useEffect(() => {
-    fetchHorarios();
-  }, []);
+  (useEffect(() => {}, []), fetchHorarios());
 
   const handleAdd = async () => {
     if (!nuevaHora) return toast.error("Seleccioná una hora");
@@ -243,7 +259,7 @@ function HorariosSection() {
           type="time"
           value={nuevaHora}
           onChange={(e) => setNuevaHora(e.target.value)}
-          className="bg-black border border-slate-700 p-3 rounded-lg text-white"
+          className="bg-black border border-white p-3 rounded-lg text-white"
         />
         <button
           onClick={handleAdd}
@@ -264,7 +280,7 @@ function HorariosSection() {
             <div
               key={h.id}
               className={`flex items-center gap-2 border rounded-xl px-3 py-2 transition
-                ${h.activo ? "bg-slate-800 border-slate-600" : "bg-slate-950 border-slate-800 opacity-50"}`}
+                ${h.activo ? "bg-black border-white" : "bg-black border-white opacity-50"}`}
             >
               <button
                 onClick={() => handleToggle(h)}
@@ -342,9 +358,7 @@ function ConfigPage() {
     }
   };
 
-  useEffect(() => {
-    fetchConfig();
-  }, []);
+  (useEffect(() => {}, []), fetchConfig());
 
   const handleSave = async () => {
     try {
@@ -403,7 +417,7 @@ function ConfigPage() {
         </p>
       </div>
 
-      <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6 space-y-8">
+      <div className="bg-black border border-white rounded-2xl p-6 space-y-8">
         {/* HORARIOS APERTURA/CIERRE */}
         <div>
           <h3 className="text-white text-lg font-semibold mb-4">Horarios</h3>
@@ -416,7 +430,7 @@ function ConfigPage() {
                 onChange={(e) =>
                   setConfig({ ...config, hora_apertura: e.target.value })
                 }
-                className="w-full mt-1 bg-black border border-slate-700 p-3 rounded-lg text-white"
+                className="w-full mt-1 bg-black border border-white p-3 rounded-lg text-white"
               />
             </div>
             <div>
@@ -427,7 +441,7 @@ function ConfigPage() {
                 onChange={(e) =>
                   setConfig({ ...config, hora_cierre: e.target.value })
                 }
-                className="w-full mt-1 bg-black border border-slate-700 p-3 rounded-lg text-white"
+                className="w-full mt-1 bg-black border border-white p-3 rounded-lg text-white"
               />
             </div>
           </div>
@@ -450,7 +464,7 @@ function ConfigPage() {
                     duracion_turno_default: e.target.value,
                   })
                 }
-                className="w-full mt-1 bg-black border border-slate-700 p-3 rounded-lg text-white"
+                className="w-full mt-1 bg-black border border-white p-3 rounded-lg text-white"
               />
             </div>
             <div>
@@ -463,7 +477,7 @@ function ConfigPage() {
                 onChange={(e) =>
                   setConfig({ ...config, buffer_entre_turnos: e.target.value })
                 }
-                className="w-full mt-1 bg-black border border-slate-700 p-3 rounded-lg text-white"
+                className="w-full mt-1 bg-black border border-white p-3 rounded-lg text-white"
               />
             </div>
             <div>
@@ -477,7 +491,7 @@ function ConfigPage() {
                     anticipacion_max_dias: e.target.value,
                   })
                 }
-                className="w-full mt-1 bg-black border border-slate-700 p-3 rounded-lg text-white"
+                className="w-full mt-1 bg-black border border-white p-3 rounded-lg text-white"
               />
             </div>
           </div>
@@ -494,7 +508,7 @@ function ConfigPage() {
                 key={day}
                 onClick={() => toggleDay(day)}
                 className={`px-4 py-2 rounded-xl border transition capitalize cursor-pointer
-                  ${active ? "bg-green-600 border-green-500 text-white" : "bg-slate-800 border-slate-700 text-slate-400"}`}
+                  ${active ? "bg-green-600 border-green-500 text-white" : "bg-black border-white text-slate-400"}`}
               >
                 {day}
               </button>
@@ -503,12 +517,12 @@ function ConfigPage() {
         </div>
 
         {/* HORARIOS DISPONIBLES ← NUEVO */}
-        <div className="border-t border-slate-700 pt-8">
+        <div className="border-t border-white pt-8">
           <HorariosSection />
         </div>
 
         {/* DIAS BLOQUEADOS */}
-        <div className="border-t border-slate-700 pt-8">
+        <div className="border-t border-white pt-8">
           <h3 className="text-white text-lg font-semibold mb-4">
             Días bloqueados
           </h3>
@@ -519,7 +533,7 @@ function ConfigPage() {
               onChange={(e) =>
                 setNuevoBloqueo({ ...nuevoBloqueo, fecha: e.target.value })
               }
-              className="bg-black border border-slate-700 p-3 rounded-lg text-white"
+              className="bg-black border border-white p-3 rounded-lg text-white"
             />
             <input
               type="text"
@@ -528,7 +542,7 @@ function ConfigPage() {
               onChange={(e) =>
                 setNuevoBloqueo({ ...nuevoBloqueo, motivo: e.target.value })
               }
-              className="bg-black border border-slate-700 p-3 rounded-lg text-white"
+              className="bg-black border border-white p-3 rounded-lg text-white"
             />
             <button
               onClick={handleAddBlockedDay}
@@ -544,7 +558,7 @@ function ConfigPage() {
               diasBloqueados.map((d) => (
                 <div
                   key={d.id}
-                  className="flex items-center justify-between bg-black border border-slate-700 rounded-lg p-3"
+                  className="flex items-center justify-between bg-black border border-white rounded-lg p-3"
                 >
                   <div>
                     <p className="text-white">{d.fecha}</p>
@@ -589,14 +603,12 @@ export const AdminPanel = () => {
     }
   };
 
-  useEffect(() => {
-    fetchNegocio();
-  }, []);
+  (useEffect(() => {}, []), fetchNegocio());
 
   return (
     <div className="flex min-h-screen bg-black">
-      <aside className="w-64 bg-slate-950 border-r border-slate-800 text-white flex flex-col">
-        <div className="p-5 border-b border-slate-800">
+      <aside className="w-64 bg-black border-r border-white text-white flex flex-col">
+        <div className="p-5 border-b border-white">
           <h1 className="font-bold text-xl">{negocio ?? "Mi negocio"}</h1>
           <p className="text-slate-500 text-sm mt-1">Panel administrador</p>
         </div>
@@ -608,7 +620,7 @@ export const AdminPanel = () => {
                 key={item.id}
                 onClick={() => setActive(item.id)}
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition cursor-pointer
-                ${isActive ? "bg-white text-black font-semibold" : "text-slate-400 hover:bg-slate-800 hover:text-white"}`}
+                ${isActive ? "bg-white text-black font-semibold" : "text-slate-400 hover:bg-black hover:text-white"}`}
               >
                 <span>{item.icon}</span>
                 {item.label}
