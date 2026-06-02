@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BookingPublic } from "./components/publicScreen.jsx";
 import { Login } from "./components/login.jsx";
 import { Register } from "./components/register.jsx";
 import { ProtectedRoute } from "./components/routes/protectedRoute.jsx";
@@ -9,6 +10,15 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+          <Route
+            path="/"
+            element={
+              <BookingPublic
+                negocioNombre="Mi Negocio"
+                baseUrl={import.meta.env.VITE_API_URL}
+              />
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route

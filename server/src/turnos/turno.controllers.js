@@ -29,7 +29,8 @@ export const findTurnos = async (req, res) => {
 export const createTurno = async (req, res) => {
   try {
     const { business_id } = req.params;
-    const { nombre, apellido, horario, servicio_id, fecha } = req.body;
+    const { nombre, apellido, tel, email, horario, servicio_id, fecha } =
+      req.body;
 
     const servicio = await ServicioEntity.findByPk(servicio_id);
     if (!servicio)
@@ -48,6 +49,8 @@ export const createTurno = async (req, res) => {
     const turnoBuild = {
       nombre,
       apellido,
+      tel,
+      email,
       horario,
       servicio_id,
       business_id,

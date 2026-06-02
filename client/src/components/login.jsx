@@ -1,6 +1,8 @@
+"use client";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 export const Login = () => {
   const API_URL = import.meta.env.VITE_API_URL;
@@ -28,10 +30,12 @@ export const Login = () => {
 
       const result = await response.json();
       if (response.ok) {
-        alert("Ha sido Logueado con exito!");
+        toast.success("El inicio de sesión se ha compleatado con exito!");
         localStorage.setItem("token", result.token);
         navigate("/adminPanel");
         return result;
+      } else {
+        toast.error("Algunas de las credenciales son invalidas!");
       }
     } catch (error) {
       console.log(error.code);
@@ -41,17 +45,17 @@ export const Login = () => {
   };
   return (
     <>
-      <div className="flex min-h-screen bg-gray-800 flex-col justify-center px-6 py-12 lg:px-8">
+      <div className="flex min-h-screen bg-[#0d1f3c] flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             alt="Coria Dev - Agenda pro"
-            src="../../lg-provisional.png"
-            className="mx-auto h-10 w-auto dark:hidden"
+            src="../../tucupo-logo.png"
+            className="mx-auto h-40 w-auto dark:hidden"
           />
           <img
             alt="Coria Dev - Agenda pro"
-            src="../../lg-provisional.png"
-            className="mx-auto m-5 h-20 w-auto not-dark:hidden"
+            src="../../tucupo-logo.png"
+            className="mx-auto m-5 h-40 w-auto not-dark:hidden"
           />
           <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900 dark:text-white">
             Iniciar sesión en el panel de administrador
@@ -112,7 +116,7 @@ export const Login = () => {
                   autoComplete="current-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
+                  className="block w-full rounded-md bg-gray-700 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
                 />
               </div>
             </div>
@@ -120,6 +124,7 @@ export const Login = () => {
             <div>
               <button
                 type="submit"
+                variant="outline"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:shadow-none dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500"
               >
                 Iniciar Sesión

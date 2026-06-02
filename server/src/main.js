@@ -6,9 +6,9 @@ import { routerTurnos } from "./turnos/turno.routes.js";
 import { routerAdmin } from "./administradores/admin.routes.js";
 import { routerServicios } from "./servicios/servicio.routes.js";
 import { routerNegocios } from "./negocios/negocio.routes.js";
+import { routerConfigs } from "./configuraciones/configs.routes.js";
 
 const app = express();
-
 
 const PORT = process.env.PORT || 3030;
 
@@ -29,6 +29,9 @@ app.use("/api/v1", routerTurnos);
 
 // endpoint servicios
 app.use("/api/v1", routerServicios);
+
+// endpoint configuraciones
+app.use("/api/v1", routerConfigs);
 
 // endpoint negocios
 app.use("/api/v1", routerNegocios);

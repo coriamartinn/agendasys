@@ -1,4 +1,4 @@
-import { getAll, createServicio } from "./servicio.services.js";
+import { getAll, createServicio, getServForId } from "./servicio.services.js";
 
 // get controlador
 export const getServicios = async (req, res) => {
@@ -10,6 +10,16 @@ export const getServicios = async (req, res) => {
     res.send(servicio);
   } catch (e) {
     res.status(400).json({ msg: `No se pudo obtener los servicios -> ${e}` });
+  }
+};
+
+export const getServiciosPublico = async (req, res) => {
+  try {
+    const { business_id } = req.params;
+    const servicios = await getServForId(business_id);
+    res.status(200).json(servicios);
+  } catch (e) {
+    res.status(400).send(e.message);
   }
 };
 

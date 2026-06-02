@@ -10,6 +10,9 @@ export const wrapperFetch = async (ruta, configMethod) => {
   if (tokenAccess) {
     configFinal.headers["x-auth-token"] = tokenAccess;
   }
+  if (configFinal.body) {
+    configFinal.headers["Content-Type"] = "application/json";
+  }
   const res = await fetch(`${BASE_URL}/${ruta}`, configFinal);
   if (!res.ok) {
     throw new Error();

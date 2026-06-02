@@ -22,3 +22,14 @@ export const buscarNegocio = async (req, res) => {
     res.status(400).send("No se encontraron los negocios");
   }
 };
+
+export const getNegocioPublico = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const negocio = await getById(id);
+    if (!negocio) return res.status(404).send("Negocio no encontrado");
+    res.status(200).json({ id: negocio.id, nombre: negocio.nombre });
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
+};

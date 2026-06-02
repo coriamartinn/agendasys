@@ -17,6 +17,12 @@ export const TurnosEntity = conn.define(
     apellido: {
       type: DataTypes.STRING,
     },
+    tel: {
+      type: DataTypes.INTEGER,
+    },
+    email: {
+      type: DataTypes.STRING,
+    },
     horario: {
       type: DataTypes.TIME,
     },

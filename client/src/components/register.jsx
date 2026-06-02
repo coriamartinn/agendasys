@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 export const Register = () => {
   const API_URL = import.meta.env.VITE_API_URL;
@@ -29,9 +30,11 @@ export const Register = () => {
 
       const result = await response.json();
       if (response.ok) {
-        alert("Ha sido creada exitosamente");
+        toast.success("El inicio de sesión se ha compleatado con exito!");
         navigate("/login");
         return result;
+      } else {
+        toast.error("Algunas de las credenciales son invalidas!");
       }
     } catch (error) {
       console.log(error.code);
@@ -41,17 +44,17 @@ export const Register = () => {
   };
   return (
     <>
-      <div className="bg-gray-800 min-h-screen flex flex-col justify-center px-6 py-12 lg:px-8">
+      <div className="bg-[#0d1f3c] min-h-screen flex flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             alt="Coria Dev - Agenda pro"
-            src="../../lg-provisional.png"
-            className="mx-auto h-10 w-auto dark:hidden"
+            src="../../tucupo-logo.png"
+            className="mx-auto h-40 w-auto dark:hidden"
           />
           <img
             alt="Coria Dev - Agenda pro"
-            src="../../lg-provisional.png"
-            className="mx-auto m-5 h-20 w-auto not-dark:hidden"
+            src="../../tucupo-logo.png"
+            className="mx-auto m-5 h-40 w-auto not-dark:hidden"
           />
           <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900 dark:text-white">
             Registrarse en el panel de administrador
@@ -135,6 +138,7 @@ export const Register = () => {
             <div>
               <button
                 type="submit"
+                variant="outline"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:shadow-none dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500"
               >
                 Registrarse
