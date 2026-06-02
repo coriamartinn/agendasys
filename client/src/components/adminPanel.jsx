@@ -7,6 +7,7 @@ import { wrapperFetch } from "../utils/utilsToken";
 const NAV_ITEMS = [
   { id: "turnos", label: "Turnos", icon: "📒" },
   { id: "config", label: "Configuración", icon: "⚙️" },
+  { id: "link", label: "Turnos disponibles", icon: "📎" },
 ];
 
 /* ───────────────────────── HELPERS ───────────────────────── */
@@ -56,7 +57,10 @@ export const TurnosPage = () => {
     }
   };
 
-  (useEffect(() => {}, []), fetchTurnos(), fetchServicios());
+  useEffect(() => {
+    fetchTurnos();
+    fetchServicios();
+  }, []);
 
   const handleDelete = async (id) => {
     try {
@@ -125,9 +129,15 @@ export const TurnosPage = () => {
               >
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                   {/* DATOS */}
-                  <div className="flex-1 min-w-0">
+                  <div className="flex-1 text-center lg:text-left min-w-0">
                     <p className="font-semibold text-white text-base break-words">
                       {t.nombre} {t.apellido}
+                    </p>
+                    <p className="font-semibold text-white text-base break-words">
+                      {t.tel}
+                    </p>
+                    <p className="font-semibold text-white text-base break-words">
+                      {t.email}
                     </p>
 
                     <p className="text-sm text-gray-300 mt-1">
@@ -141,7 +151,7 @@ export const TurnosPage = () => {
                   </div>
 
                   {/* HORA */}
-                  <div className="flex justify-center lg:justify-start">
+                  <div className="flex justify-center">
                     <span className="bg-black border border-white text-white px-4 py-2 rounded-lg font-semibold whitespace-nowrap">
                       {t.horario}
                     </span>
@@ -194,7 +204,9 @@ function HorariosSection() {
     }
   };
 
-  (useEffect(() => {}, []), fetchHorarios());
+  useEffect(() => {
+    fetchHorarios();
+  }, []);
 
   const handleAdd = async () => {
     if (!nuevaHora) return toast.error("Seleccioná una hora");
@@ -358,7 +370,9 @@ function ConfigPage() {
     }
   };
 
-  (useEffect(() => {}, []), fetchConfig());
+  useEffect(() => {
+    fetchConfig();
+  }, []);
 
   const handleSave = async () => {
     try {
@@ -592,24 +606,28 @@ function ConfigPage() {
 
 export const AdminPanel = () => {
   const [active, setActive] = useState("turnos");
-  const [negocio, setNegocio] = useState("");
+  const [negocio, setNegocio] = useState({ nombre: "", id: null });
 
   const fetchNegocio = async () => {
     try {
       const data = await wrapperFetch("negocios/mi-negocio");
-      setNegocio(data.nombre);
+      setNegocio({ nombre: data.nombre, id: data.id });
     } catch (err) {
       console.log(err);
     }
   };
 
-  (useEffect(() => {}, []), fetchNegocio());
+  useEffect(() => {
+    fetchNegocio();
+  }, []);
 
   return (
     <div className="flex min-h-screen bg-black">
       <aside className="w-64 bg-black border-r border-white text-white flex flex-col">
         <div className="p-5 border-b border-white">
-          <h1 className="font-bold text-xl">{negocio ?? "Mi negocio"}</h1>
+          <h1 className="font-bold text-xl">
+            {negocio.nombre ?? "Mi negocio"}
+          </h1>
           <p className="text-slate-500 text-sm mt-1">Panel administrador</p>
         </div>
         <nav className="flex-1 flex flex-col gap-2 p-3">
@@ -618,7 +636,16 @@ export const AdminPanel = () => {
             return (
               <button
                 key={item.id}
-                onClick={() => setActive(item.id)}
+                onClick={() => {
+                  if (item.id === "link") {
+                    window.open(
+                      `${window.location.origin}/elegirTurnos/${negocio.id}`,
+                      "_blank",
+                    );
+                    return;
+                  }
+                  setActive(item.id);
+                }}
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition cursor-pointer
                 ${isActive ? "bg-white text-black font-semibold" : "text-slate-400 hover:bg-black hover:text-white"}`}
               >

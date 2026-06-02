@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -362,7 +363,8 @@ function Row({ label, value, accent }) {
 }
 
 /* ─── MAIN COMPONENT ─── */
-export const BookingPublic = ({ negocioId = 2 }) => {
+export const BookingPublic = () => {
+  const { negocioId } = useParams();
   const [step, setStep] = useState(1);
   const [servicio, setServicio] = useState(null);
   const [datosFinal, setDatosFinal] = useState(null);

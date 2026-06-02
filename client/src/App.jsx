@@ -10,15 +10,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <BookingPublic
-                negocioNombre="Mi Negocio"
-                baseUrl={import.meta.env.VITE_API_URL}
-              />
-            }
-          />
+          <Route path="/elegirTurnos/:negocioId" element={<BookingPublic />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route
