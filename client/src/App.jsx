@@ -4,12 +4,14 @@ import { Login } from "./components/login.jsx";
 import { Register } from "./components/register.jsx";
 import { ProtectedRoute } from "./components/routes/protectedRoute.jsx";
 import { AdminPanel } from "./components/adminPanel.jsx";
+import { Home } from "./components/home.jsx";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/elegirTurnos/:negocioId" element={<BookingPublic />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
