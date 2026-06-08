@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { wrapperFetch } from "../utils/utilsToken";
+import { use } from "react";
 
 /* ───────────────────────── NAV ───────────────────────── */
 
@@ -348,6 +349,10 @@ function ConfigPage() {
 
   const [diasBloqueados, setDiasBloqueados] = useState([]);
   const [nuevoBloqueo, setNuevoBloqueo] = useState({ fecha: "", motivo: "" });
+  const [servicio, setServicio] = useState({
+    nombre: "",
+    precio: 0,
+  });
 
   const fetchConfig = async () => {
     try {
@@ -418,6 +423,20 @@ function ConfigPage() {
     }
   };
 
+  const armarServicio = async () => {
+    try {
+      await wrapperFetch(`servicios`, {
+        method: "POST",
+        body: JSON.stringify(servicio),
+      });
+      toast.success("Servicio creado con exito!");
+      setServicio({ nombre: "", precio: 0 });
+    } catch (e) {
+      console.log(e);
+      toast.error("Error creando servicio");
+    }
+  };
+
   if (loading) return <Spinner />;
 
   return (
@@ -433,6 +452,45 @@ function ConfigPage() {
 
       <div className="bg-black border border-white rounded-2xl p-6 space-y-8">
         {/* HORARIOS APERTURA/CIERRE */}
+        <div>
+          <h3 className="text-white text-lg font-semibold mb-4">
+            Crear servicios
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="text-sm text-slate-400">
+                Nombre del servicio
+              </label>
+              <input
+                type="text"
+                value={servicio.nombre}
+                onChange={(e) =>
+                  setServicio({ ...servicio, nombre: e.target.value })
+                }
+                className="w-full mt-1 bg-black border border-white p-3 rounded-lg text-white"
+              />
+            </div>
+            <div>
+              <label className="text-sm text-slate-400">
+                Precio del servicio
+              </label>
+              <input
+                type="number"
+                value={servicio.precio}
+                onChange={(e) =>
+                  setServicio({ ...servicio, precio: e.target.value })
+                }
+                className="w-full mt-1 bg-black border border-white p-3 rounded-lg text-white"
+              />
+            </div>
+          </div>
+        </div>
+        <button
+          onClick={armarServicio}
+          className="bg-white py-2 px-2 text-black rounded-lg font-semibold hover:bg-slate-200 transition cursor-pointer"
+        >
+          Crear servicio
+        </button>
         <div>
           <h3 className="text-white text-lg font-semibold mb-4">Horarios</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
