@@ -1,14 +1,25 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { wrapperFetch } from "../utils/utilsToken";
-import { use } from "react";
-
+import { CalendarDays, Settings, Link2, LogOut, Menu, X } from "lucide-react";
 /* ───────────────────────── NAV ───────────────────────── */
 
 const NAV_ITEMS = [
-  { id: "turnos", label: "Turnos", icon: "📒" },
-  { id: "config", label: "Configuración", icon: "⚙️" },
-  { id: "link", label: "Turnos disponibles", icon: "📎" },
+  {
+    id: "turnos",
+    label: "Turnos",
+    icon: CalendarDays,
+  },
+  {
+    id: "config",
+    label: "Configuración",
+    icon: Settings,
+  },
+  {
+    id: "link",
+    label: "Turnos disponibles",
+    icon: Link2,
+  },
 ];
 
 /* ───────────────────────── HELPERS ───────────────────────── */
@@ -109,7 +120,7 @@ export const TurnosPage = () => {
           Fecha
         </button>
 
-        <span className="sm:ml-auto text-sm text-gray-300">
+        <span className="sm:ml-auto mt-2 sm:mt-0 text-sm text-gray-300">
           {sortedTurnos.length} {sortedTurnos.length === 1 ? "Turno" : "Turnos"}
         </span>
       </div>
@@ -126,11 +137,11 @@ export const TurnosPage = () => {
             return (
               <div
                 key={t.id}
-                className="bg-black border border-white rounded-xl p-4 transition hover:border-white"
+                className="bg-black border border-white rounded-xl p-4 md:p-5 transition hover:border-white max-w-full"
               >
-                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4">
                   {/* DATOS */}
-                  <div className="flex-1 text-center lg:text-left min-w-0">
+                  <div className="flex-1 text-center xl:text-left min-w-0 space-y-1">
                     <p className="font-semibold text-white text-base break-words">
                       {t.nombre} {t.apellido}
                     </p>
@@ -152,15 +163,15 @@ export const TurnosPage = () => {
                   </div>
 
                   {/* HORA */}
-                  <div className="flex justify-center">
+                  <div className="flex justify-center my-2">
                     <span className="bg-black border border-white text-white px-4 py-2 rounded-lg font-semibold whitespace-nowrap">
                       {t.horario}
                     </span>
                   </div>
 
                   {/* BOTONES */}
-                  <div className="flex flex-row justify-center lg:justify-end gap-2 w-full lg:w-auto">
-                    <button className="bg-green-700 text-white py-2 px-4 rounded-lg hover:bg-green-800 transition cursor-pointer flex items-center justify-center">
+                  <div className="flex flex-col sm:flex-row justify-center gap-2 w-full sm:w-auto mt-2">
+                    <button className="bg-green-700 text-white h-12 px-4 rounded-lg flex items-center justify-center">
                       <img
                         className="w-6 h-6 object-contain"
                         src="../../icon-wpp.png"
@@ -169,7 +180,7 @@ export const TurnosPage = () => {
                     </button>
 
                     <button
-                      className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition cursor-pointer"
+                      className="bg-red-500 text-white h-12 px-4 rounded-lg"
                       onClick={() => handleDelete(t.id)}
                     >
                       Eliminar
@@ -267,7 +278,7 @@ function HorariosSection() {
       </h3>
 
       {/* AGREGAR */}
-      <div className="flex gap-3 mb-4">
+      <div className="flex flex-col sm:flex-row gap-3 mb-4">
         <input
           type="time"
           value={nuevaHora}
@@ -450,7 +461,7 @@ function ConfigPage() {
         </p>
       </div>
 
-      <div className="bg-black border border-white rounded-2xl p-6 space-y-8">
+      <div className="bg-black border border-white rounded-2xl p-4 md:p-6 space-y-8">
         {/* HORARIOS APERTURA/CIERRE */}
         <div>
           <h3 className="text-white text-lg font-semibold mb-4">
@@ -630,7 +641,7 @@ function ConfigPage() {
               diasBloqueados.map((d) => (
                 <div
                   key={d.id}
-                  className="flex items-center justify-between bg-black border border-white rounded-lg p-3"
+                  className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 bg-black border border-white rounded-lg p-3"
                 >
                   <div>
                     <p className="text-white">{d.fecha}</p>
@@ -665,6 +676,8 @@ function ConfigPage() {
 export const AdminPanel = () => {
   const [active, setActive] = useState("turnos");
   const [negocio, setNegocio] = useState({ nombre: "", id: null });
+  const [collapsed, setCollapsed] = useState(false);
+  const [mobileMenu, setMobileMenu] = useState(false);
 
   const fetchNegocio = async () => {
     try {
@@ -681,16 +694,72 @@ export const AdminPanel = () => {
 
   return (
     <div className="flex min-h-screen bg-black">
-      <aside className="w-64 bg-black border-r border-white text-white flex flex-col">
-        <div className="p-5 border-b border-white">
-          <h1 className="font-bold text-xl">
-            {negocio.nombre ?? "Mi negocio"}
-          </h1>
-          <p className="text-slate-500 text-sm mt-1">Panel administrador</p>
+      {/* BOTON MOBILE */}
+      {!mobileMenu && (
+        <button
+          onClick={() => setMobileMenu(true)}
+          className="md:hidden fixed top-4 left-4 z-[70] bg-white text-black w-10 h-10 rounded-lg flex items-center justify-center shadow-lg"
+        >
+          <Menu size={20} />
+        </button>
+      )}
+
+      {/* OVERLAY MOBILE */}
+      {mobileMenu && (
+        <div
+          className="fixed inset-0 bg-black/70 z-40 md:hidden"
+          onClick={() => setMobileMenu(false)}
+        />
+      )}
+
+      {/* SIDEBAR */}
+      <aside
+        className={`
+        fixed md:relative
+        top-0 left-0 h-screen
+        bg-black border-r border-white text-white flex flex-col
+        transition-all duration-300 z-50
+
+        ${mobileMenu ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
+
+        ${collapsed ? "md:w-20" : "md:w-64"}
+        w-64
+      `}
+      >
+        {/* HEADER */}
+        <div className="p-4 border-b border-white flex items-center justify-between">
+          {!collapsed && (
+            <div>
+              <h1 className="font-bold text-xl truncate">
+                {negocio.nombre ?? "Mi negocio"}
+              </h1>
+
+              <p className="text-slate-500 text-sm">Panel administrador</p>
+            </div>
+          )}
+
+          <div className="flex gap-2">
+            <button
+              onClick={() => setCollapsed(!collapsed)}
+              className="hidden md:block p-2 rounded-lg hover:bg-zinc-900"
+            >
+              ☰
+            </button>
+
+            <button
+              onClick={() => setMobileMenu(false)}
+              className="md:hidden p-2 rounded-lg hover:bg-zinc-900"
+            >
+              <X size={20} />
+            </button>
+          </div>
         </div>
+
+        {/* NAV */}
         <nav className="flex-1 flex flex-col gap-2 p-3">
           {NAV_ITEMS.map((item) => {
             const isActive = active === item.id;
+
             return (
               <button
                 key={item.id}
@@ -702,28 +771,58 @@ export const AdminPanel = () => {
                     );
                     return;
                   }
+
                   setActive(item.id);
+                  setMobileMenu(false);
                 }}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition cursor-pointer
-                ${isActive ? "bg-white text-black font-semibold" : "text-slate-400 hover:bg-black hover:text-white"}`}
+                className={`
+                flex items-center
+                ${collapsed ? "md:justify-center" : "gap-3"}
+                px-4 py-3 rounded-xl transition
+
+                ${
+                  isActive
+                    ? "bg-white text-black font-semibold"
+                    : "text-slate-400 hover:text-white"
+                }
+              `}
               >
-                <span>{item.icon}</span>
-                {item.label}
+                <item.icon size={20} />
+
+                {(!collapsed || window.innerWidth < 768) && (
+                  <span className="text-sm">{item.label}</span>
+                )}
               </button>
             );
           })}
+
           <button
             onClick={() => {
               localStorage.removeItem("token");
               window.location.href = "/login";
             }}
-            className="mt-auto bg-red-500 hover:bg-red-700 text-white text-sm px-4 py-3 rounded-xl transition cursor-pointer"
+            className="mt-auto bg-red-500 hover:bg-red-700 text-white py-3 rounded-xl"
           >
-            Cerrar sesión
+            {collapsed ? (
+              <LogOut size={20} className="mx-auto" />
+            ) : (
+              "Cerrar sesión"
+            )}
           </button>
         </nav>
       </aside>
-      <main className="flex-1 p-8 overflow-auto">
+
+      {/* CONTENIDO */}
+      <main
+        className={`
+    flex-1 overflow-auto
+    pt-20 md:pt-8
+    p-4 md:p-8
+    w-full
+
+        ${collapsed ? "md:ml-20" : "md:ml-64"}
+      `}
+      >
         {active === "turnos" && <TurnosPage />}
         {active === "config" && <ConfigPage />}
       </main>
